@@ -45,15 +45,10 @@ const handleCopy = async () => {
     setResult(null);
     setError(null);
     setLoading(true);
-
-    console.log("Sending to:", `${import.meta.env.VITE_API_BASE_URL}/api/ai`);
-
     const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/ai`, {
       prompt,
     });
-
-    console.log("API response:", response.data);
-    setResult(response.data.result || response.data);  
+    setResult(response.data);  
     setTimeout(() => {
       setLoading(false);
     }, 1500);

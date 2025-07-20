@@ -48,7 +48,7 @@ const landing = () => {
           }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-600 transition-all"
+            className="mt-8 bg-blue-500 cursor-pointer text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-600 transition-all"
           >
             Try It Free
           </motion.button>
@@ -82,9 +82,12 @@ const landing = () => {
         <section>
           <h3 className="text-3xl font-bold">Ready to Transform Your Writing?</h3>
           <motion.button
+          onClick={() => {
+            navigate("/home");
+          }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-600 transition-all"
+            className="mt-8 cursor-pointer bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-600 transition-all"
           >
             Start Improving Now
           </motion.button>
