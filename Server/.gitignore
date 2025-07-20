@@ -1,0 +1,93 @@
+# ===================================================================
+# General & System Files
+# ===================================================================
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor directories
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ===================================================================
+# Sensitive Data & Credentials (DO NOT COMMIT)
+# ===================================================================
+
+# Environment variables contain secrets like API keys and database passwords
+.env
+.env.*
+!.env.example
+
+# Credential files and private keys
+*.pem
+*.key
+credentials.json
+secrets.yml
+
+# OAuth 2.0 files
+.htpasswd
+*.p12
+*.pfx
+
+# ===================================================================
+# Dependencies & Packages
+# ===================================================================
+
+# Node.js
+node_modules/
+
+# Python
+venv/
+env/
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+
+# Ruby
+vendor/bundle/
+.bundle/
+
+# Go
+vendor/
+
+# Java
+target/
+*.class
+
+# Composer (PHP)
+vendor/
+
+# ===================================================================
+# Logs, Uploads & Build Artifacts
+# ===================================================================
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# Test reports and code coverage
+coverage/
+.nyc_output/
+
+# User-uploaded content (if applicable)
+uploads/
+media/
