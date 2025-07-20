@@ -48,7 +48,7 @@ const handleCopy = async () => {
 
     console.log("Sending to:", `${import.meta.env.VITE_API_BASE_URL}/api/ai`);
 
-    const response = await axios.post(`https://ai-enhancer-1.onrender.com/api/ai`, {
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/ai`, {
       prompt,
     });
 
