@@ -45,7 +45,7 @@ const handleCopy = async () => {
         setResult(null);
         setError(null);
         setLoading(true);
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/generate`, {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/ai`, {
           prompt,
         });
         setResult(response.data);
