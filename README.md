@@ -45,7 +45,7 @@ Make sure you have the following software installed on your machine:
 1.  **Clone the Repository**
     Open your terminal and clone the repository to your local machine.
     ```sh
-    git clone [https://github.com/your-username/your-repository-name.git](https://github.com/your-username/your-repository-name.git)
+    git clone (https://github.com/asiduki/Ai-Enhancer)
     ```
     *(Replace `your-username/your-repository-name` with your actual GitHub repository URL)*
 
