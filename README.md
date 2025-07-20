@@ -1,6 +1,10 @@
+To Vist - https://ai-enhancer-client.onrender.com
 # AI Text Enhancer & Grammar Checker
 
-<img width="1913" height="870" alt="image" src="https://github.com/user-attachments/assets/709170b6-2453-43cc-aa5b-19ff81f1b53f" />
+<img width="1893" height="878" alt="image" src="https://github.com/user-attachments/assets/cacbcf8a-d9a6-4292-bf4b-2cb37823181f" />
+<img width="1918" height="869" alt="image" src="https://github.com/user-attachments/assets/e6cec3e8-237f-4808-87fe-7f9f218cd751" />
+
+
 
 
 An intuitive web application that leverages the power of AI to correct grammar, enhance phrasing, and improve your writing in real-time. Built with a modern tech stack, it provides a seamless and responsive user experience.
