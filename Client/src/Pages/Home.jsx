@@ -37,27 +37,32 @@ const handleCopy = async () => {
     "Correct the following text and provide only the final, corrected version as the output." +
     text;
   const apihandeler = async () => {
-    if (!text) {
-        setError(null);
-      setError("Please enter some text");
-    } else {
-      try {
-        setResult(null);
-        setError(null);
-        setLoading(true);
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/ai`, {
-          prompt,
-        });
-        setResult(response.data);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1500);
-      } catch (error) {
-        setError(null);
-        setError(error.message);
-      }
-    }
-  };
+  if (!text) {
+    setError("Please enter some text");
+    return;
+  }
+  try {
+    setResult(null);
+    setError(null);
+    setLoading(true);
+
+    console.log("Sending to:", `${import.meta.env.VITE_API_BASE_URL}/api/ai`);
+
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/ai`, {
+      prompt,
+    });
+
+    console.log("API response:", response.data);
+    setResult(response.data.result || response.data);  
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  } catch (error) {
+    console.error("API Error:", error);
+    setError(error?.response?.data?.message || error.message || "Something went wrong");
+    setLoading(false);
+  }
+};
   return (
     <>
     <Navbar/>
