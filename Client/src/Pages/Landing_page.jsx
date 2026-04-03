@@ -1,103 +1,242 @@
-import React from 'react'
-import React, { useState } from 'react'   
-import { NavLink ,useNavigate} from 'react-router-dom'
-
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+import axios from "axios";
+import { FaArrowRight } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const Landing_page = () => {
   const navigate = useNavigate();
-    const GrammarIcon = () => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><path d="m18 16-4-4 4-4"/><path d="m6 8-4 4 4 4"/><path d="m14 4-4 16"/></svg>
-    );
-    const StyleIcon = () => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><path d="M2 12h20"/><path d="M12 2v20"/></svg>
-    );
-    const SpellingIcon = () => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><path d="M12 20V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8"/></svg>
-    );
-    const ClarityIcon = () => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-    );
-    const featureCards = [
-        { icon: <GrammarIcon />, title: "Grammar Correction", description: "Catch and correct all types of grammatical errors with precision." },
-        { icon: <StyleIcon />, title: "Style Enhancement", description: "Improve readability, conciseness, and overall flow of your text." },
-        { icon: <SpellingIcon />, title: "Spelling Accuracy", description: "Eliminate typos and ensure flawless spelling in every document." },
-        { icon: <ClarityIcon />, title: "Clarity Suggestions", description: "Get suggestions to make your sentences clearer and more impactful." },
-      ];
+  const Backend_url = import.meta.env.VITE_Backend_Url;
+  const [text, setText] = useState("");
+  const [Loading, setLoading] = useState(true);
+  const [Inloading, setInLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [Userdata, setUserdata] = useState({});
+  const [copyButtonText, setCopyButtonText] = useState("Copy");
+  const [result, setResult] = useState();
+  const [error, setError] = useState(null);
+  const [ShowResultLoading, setShowResultLoading] = useState(false);
+
+  const HandleChange = (e) => {
+    setText(e.target.value);
+    setError(null);
+  };
+
+  const LogOut = async () => {
+    try {
+      const res = await axios.post(
+        `${Backend_url}/api/login/logout`,
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+      if (res.status == 200) {
+        navigate("/Login");
+      }
+    } catch (err) {
+      alert(err.response?.data?.message || "Something went wrong ");
+    }
+  };
+  const handleCopy = async () => {
+    // Guard against copying empty or placeholder text
+    if (!result || Inloading) return;
+
+    try {
+      await navigator.clipboard.writeText(result);
+      setCopyButtonText("Copied! ✅");
+      setTimeout(() => {
+        setCopyButtonText("Copy");
+      }, 2000); // Reset button text after 2 seconds
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+      setCopyButtonText("Failed");
+    }
+  };
+  const prompt =
+    "Correct the following text and provide only the final, corrected version as the output." +
+    text;
+  const apihandeler = async () => {
+    if (!text) {
+      setError(null);
+      setError("Please enter some text");
+    } else {
+      try {
+        setResult(null);
+        setError(null);
+        setInLoading(true);
+        setShowResultLoading(true);
+
+        const response = await axios.post("http://localhost:5000/api/ai", {
+          prompt,
+        });
+        setResult(response.data);
+        setTimeout(() => {
+          setShowResultLoading(false);
+        }, 1500);
+      } catch (error) {
+        setError(null);
+        setError(error.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const getuserinfo = async () => {
+      try {
+        const res = await axios.get(`${Backend_url}/api/login/getInfo`, {
+          withCredentials: true,
+        });
+        if (res.status == 200) {
+          setUserdata(res.data);
+        }
+      } catch (err) {
+        setMessage(err.response?.data?.message);
+        if (err.response?.status === 401) {
+          navigate("/Login");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    getuserinfo();
+    setInLoading(false);
+  }, []);
   return (
-      <div>
-     <div className="bg-white text-gray-800 font-sans">
-      <header className="py-4 px-8 flex justify-between items-center border-b border-gray-200">
-        <h1 className="text-xl font-bold">Text Enhancer</h1>
-      </header>
-
-      <main className="max-w-5xl mx-auto px-4 py-16 sm:py-24 text-center">
-        
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+    <AnimatePresence mode="wait">
+      {Loading ? (
+        <motion.div
+          key="loader"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="min-h-screen flex justify-center items-center"
         >
-          <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">Elevate Your Writing with AI</h2>
-          <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-            Instantly correct grammar, refine style, and enhance clarity for impactful communication. Your personal writing assistant.
-          </p>
-          <motion.button
-          onClick={() => {
-            navigate("/home");
-          }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-600 transition-all"
-          >
-            Try It Free
-          </motion.button>
-          <div className="mt-10 text-left p-4 bg-gray-50 border border-gray-200 rounded-lg max-w-2xl mx-auto text-gray-600">
-            This is an example text that has some <span className="text-red-500 line-through">grammer</span><span className="text-green-600 font-semibold"> grammar</span> errors and also could be improved for better flow. It is a <span className="text-red-500 line-through">long sentence with many words</span>. We want to make sure that the text is clear, concise, and impactful. This tool will help you <span className="text-green-600 font-semibold">achieve that goal</span>.
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="border-4 w-12 h-12 rounded-full border-white/10 border-t-[#876cff]"
+          />
+        </motion.div>
+      ) : (
+        <motion.div
+          key="content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
+          transition={{ duration: 1 }}
+          className="flex w-full min-h-screen h-full font-inter bg-gradient-to-br from-[#0b1020] via-[#211f4b] to-[#0b3042]"
+        >
+          <div className=" w-[20%] text-white border-r border-white/10">
+            <div className=" font-semibold  px-6 py-6 text-lg ">EnhanceAi</div>
+            <div className=" py-[20px]">
+              <div className="pl-8">
+                <p className="text-white/50 text-sm">WELCOME BACK</p>
+                <div className="flex gap-2">
+                  <div className="bg-[#1e1640] w-12 h-12 rounded-full p-1">
+                    <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#876cff] via-[#a291ff] to-[#c4b5fd]">
+                      {Userdata?.name
+                        ?.split(" ")
+                        .map((word) => word[0])
+                        .join("")
+                        .toUpperCase()}
+                    </span>
+                  </div>
+                  <h3 className="font-bold mt-1">{Userdata.name}</h3>
+                </div>
+              </div>
+            </div>
           </div>
-        </motion.section>
+          <div className="w-[80%] min-h-screen h-full  text-white  pt-3">
+            <div className="pt-0 p-[40px] h-full w-full">
+              <div className="flex w-full">
+                <p className="text-[32px] font-[800]">Text Enhancer</p>{" "}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={LogOut}
+                  className="absolute flex gap-1 end-12 border-2 px-4 py-1 border-white/50 rounded-full cursor-pointer"
+                >
+                  <IoLogOutOutline className="mt-1" />
+                  Logout
+                </motion.button>
+              </div>
+              <p className="text-[16px] text-white/50 mb-2">
+                A focused workspace with just two panels — one for your original
+                text and one for the AI-enhanced output.
+              </p>
+              <div className="flex gap-5 w-full h-full justify-center items-center">
+                <div className="relative w-[45%] border-white/30 border rounded-xl p-6 min-h-[500px] h-full">
+                  <div className="font-semibold mb-2">Input</div>
+                  <textarea
+                     value={text}
+                    onChange={HandleChange}
+                    className="pt-0 px-[16px] h-[272px] w-full text-white/50 outline-none bg-transparent resize-none placeholder:text-white/30 "
+                    placeholder="Paste or type your raw content here. For example: “We are excited to share our product update and hope users will find it useful for their workflows...”"
+                  >
+                    
+                    {/* {error && (
+                      <p className="text-red-500 mt-2 text-center">{error}</p>
+                    )} */}
+                  </textarea>
 
-        {/* Features Section */}
-        <section className="py-24 sm:py-32">
-          <h3 className="text-3xl font-bold mb-12">Key Features</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featureCards.map((card, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-gray-50 p-6 rounded-xl border border-gray-200 text-left"
-              >
-                <div className="mb-4">{card.icon}</div>
-                <h4 className="font-bold text-lg mb-2">{card.title}</h4>
-                <p className="text-gray-600 text-sm">{card.description}</p>
-              </motion.div>
-            ))}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={apihandeler}
+                    className="absolute bottom-10 flex gap-2 bg-gradient-to-r from-[#7963ff] to-[#538dff] rounded-xl py-2 px-2 "
+                  >
+                    Enhance Text <FaArrowRight className="mt-1" />
+                  </motion.button>
+                </div>
+                <div className="w-[45%] border-white/30 border rounded-xl p-6 min-h-[500px] h-full">
+                  <div className="font-semibold mb-2 ">Output</div>
+                  <div className="pt-0 px-[16px] h-full w-full text-white/50  bg-transparent">
+                    
+                    {ShowResultLoading ? (
+                      <motion.div
+                        key="loader"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex justify-center items-center h-[300px]"
+                      >
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
+                          className="border-4 w-12 h-12 rounded-full border-white/10 border-t-[#876cff]"
+                        />
+                      </motion.div>
+                    ) : (
+                      <>
+                        {Inloading?(
+                          <>
+                          {result}
+                          </>
+                      ):(<>
+                      We’re excited to introduce our latest product update,
+                    thoughtfully designed to make everyday workflows faster,
+                    clearer, and more efficient. This release brings practical
+                    improvements that help users accomplish more with less
+                    friction while enjoying a smoother overall experience.
+                      </>)}
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </section>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
-       
-        <section>
-          <h3 className="text-3xl font-bold">Ready to Transform Your Writing?</h3>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-8 bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-600 transition-all"
-          >
-            Start Improving Now
-          </motion.button>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="text-center py-8 border-t border-gray-200 text-gray-500">
-        © 2025 Text Enhancer. All rights reserved.
-      </footer>
-    </div>
-    </div>
-  )
-}
-
-export default Landing_page
+export default Landing_page;
