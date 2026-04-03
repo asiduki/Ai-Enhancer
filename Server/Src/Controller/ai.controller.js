@@ -1,7 +1,7 @@
-import express from "express";
-import generateContent from "../Service/ai.service.js";
+const express = require("express");
+const generateContent = require("../Service/ai.service.js");
 
-export const generateText = async (req, res) => {
+const generateText = async (req, res) => {
     const prompt = req.body.prompt;
     if(!prompt) return res.status(400).json({ message: "Prompt is required" });
     else{
@@ -14,3 +14,5 @@ export const generateText = async (req, res) => {
         }
     }
 }
+
+module.exports = { generateText };

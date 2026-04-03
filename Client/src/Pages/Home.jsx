@@ -20,7 +20,7 @@ const navigate = useNavigate();
 // Add this function inside your component
 const handleCopy = async () => {
   // Guard against copying empty or placeholder text
-  if (!result || loading) return;
+  if (!result || Inloading) return;
 
   try {
     await navigator.clipboard.writeText(result);
@@ -44,13 +44,13 @@ const handleCopy = async () => {
       try {
         setResult(null);
         setError(null);
-        setLoading(true);
+        setInLoading(true);
         const response = await axios.post("http://localhost:5000/api/ai", {
           prompt,
         });
         setResult(response.data);
         setTimeout(() => {
-          setLoading(false);
+          setInLoading(false);
         }, 1500);
       } catch (error) {
         setError(null);
@@ -80,12 +80,12 @@ const handleCopy = async () => {
          <div className="w-full h-px bg-gray-700 lg:hidden"></div>
          <motion.button
             onClick={apihandeler}
-            disabled={loading}
-            whileHover={{ scale: loading ? 1 : 1.05 }}
-            whileTap={{ scale: loading ? 1 : 0.95 }}
-            className={`bg-[#4b9cff] text-white font-bold rounded-lg py-3 px-6 my-4 transition-all duration-300 hover:bg-[#3581d8] ${loading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+            disabled={Inloading}
+            whileHover={{ scale: Inloading ? 1 : 1.05 }}
+            whileTap={{ scale: Inloading ? 1 : 0.95 }}
+            className={`bg-[#4b9cff] text-white font-bold rounded-lg py-3 px-6 my-4 transition-all duration-300 hover:bg-[#3581d8] ${Inloading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
           >
-            {loading ? "Correcting..." : "Correct Text"}
+            {Inloading ? "Correcting..." : "Correct Text"}
           </motion.button>
           <div className="h-full w-px bg-gray-700 hidden lg:block"></div>
           <div className="w-full h-px bg-gray-700 lg:hidden"></div>
@@ -98,7 +98,7 @@ const handleCopy = async () => {
     <div className="p-4 border-b border-gray-700 flex justify-between items-center">
       <h2 className="text-xl font-bold">Corrected Text</h2>
       {/* ADDED BUTTON */}
-      {!loading && result && (
+      {!Inloading && result && (
         <motion.button
           onClick={handleCopy}
           whileTap={{ scale: 0.95 }}
@@ -110,7 +110,7 @@ const handleCopy = async () => {
     </div>
     <div className="p-4 overflow-y-auto h-full">
       <AnimatePresence mode="wait">
-        {loading ? (
+        {Inloading ? (
           <motion.div
             key="loader"
             initial={{ opacity: 0 }}
