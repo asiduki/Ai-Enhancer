@@ -57,7 +57,7 @@ const Login_user = async (req, res) => {
           .json({ message: "Email or Password in mismatch" });
       }
       let token = jwt.sign({ userid: Find_User._id }, process.env.JWT_SECRET);
-      res.cookie("token", token ,{
+      res.cookie("token", token, {
         httpOnly: true,
         secure: true,
         sameSite: "None",
@@ -73,7 +73,11 @@ const Login_user = async (req, res) => {
 
 const Logout_User = async (req, res) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
     return res.status(200).json({ message: "User Logout successfully" });
   } catch (err) {
     return res
