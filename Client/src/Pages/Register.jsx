@@ -6,6 +6,7 @@ import { FaGithub } from "react-icons/fa";
 import { IoLogoGoogle } from "react-icons/io";
 import { MdLogin } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { IoLogInOutline } from "react-icons/io5";
 
 const Register = () => {
   const Backend_url = import.meta.env.VITE_Backend_Url;
@@ -39,11 +40,12 @@ const Register = () => {
   };
   return (
     <div className="bg-gradient-to-br from-[#181a34] via-[#0b0f1c] to-[#191839] min-h-screen h-full p-0 ">
-      <div className="flex p-3">
+      <div className="flex p-3 items-center pt-2">
         <h1 className="font-semibold text-lg text-white">EnhanceAI</h1>
-        <p className="absolute right-4 text-white">
-          <Link to="/Login">Already have an account?{" "}
-          <button className="cursor-pointer border border-black  px-2 py-2 rounded">
+        <p className="absolute right-7 text-white">
+          <Link to="/Login" className="flex gap-2 justify-center items-center text-lg">Already have an account?{" "}
+          <button className="cursor-pointer border border-black  px-2 py-1 mt-1 rounded bg-[#1e1e42] flex gap-1">
+            <IoLogInOutline  className="mt-1"/>
             Sign in
           </button></Link>
           
@@ -88,7 +90,7 @@ const Register = () => {
             </p>
             <p className="bg-white/5 rounded-2xl px-2">Private workspace</p>
           </div>
-          <p className="text-white bg-white/5 rounded-2xl px-2 w-35 mt-4">
+          <p className="text-white bg-white/5 rounded-2xl px-2 w-40 mt-4">
             Instant at Output
           </p>
         </div>
