@@ -40,7 +40,7 @@ const Register = () => {
   return (
     <div className="bg-gradient-to-br from-[#181a34] via-[#0b0f1c] to-[#191839] min-h-screen h-full p-0 ">
       <div className="flex p-3">
-        <h1 className="font-semibold text-l text-white">EnhanceAI</h1>
+        <h1 className="font-semibold text-lg text-white">EnhanceAI</h1>
         <p className="absolute right-4 text-white">
           <Link to="/Login">Already have an account?{" "}
           <button className="cursor-pointer border border-black  px-2 py-2 rounded">
