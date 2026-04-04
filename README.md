@@ -1,7 +1,10 @@
 # AI Text Enhancer & Grammar Checker
 
-<img width="1913" height="870" alt="image" src="https://github.com/user-attachments/assets/709170b6-2453-43cc-aa5b-19ff81f1b53f" />
+![alt text](image.png)
 
+![alt text](image-1.png)
+
+![alt text](image-2.png)
 
 An intuitive web application that leverages the power of AI to correct grammar, enhance phrasing, and improve your writing in real-time. Built with a modern tech stack, it provides a seamless and responsive user experience.
 
@@ -45,7 +48,7 @@ Make sure you have the following software installed on your machine:
 1.  **Clone the Repository**
     Open your terminal and clone the repository to your local machine.
     ```sh
-    git clone [https://github.com/your-username/your-repository-name.git](https://github.com/your-username/your-repository-name.git)
+    git clone (https://github.com/asiduki/Ai-Enhancer.git)
     ```
     *(Replace `your-username/your-repository-name` with your actual GitHub repository URL)*
 

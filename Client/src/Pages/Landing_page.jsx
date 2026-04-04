@@ -69,7 +69,7 @@ const Landing_page = () => {
         setInLoading(true);
         setShowResultLoading(true);
 
-        const response = await axios.post("http://localhost:5000/api/ai", {
+        const response = await axios.post(`${Backend_url}/api/ai`, {
           prompt,
         });
         setResult(response.data);
