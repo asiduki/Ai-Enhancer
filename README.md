@@ -1,10 +1,9 @@
 # AI Text Enhancer & Grammar Checker
 
-![alt text](image.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
 
-![alt text](image-1.png)
-
-![alt text](image-2.png)
 
 An intuitive web application that leverages the power of AI to correct grammar, enhance phrasing, and improve your writing in real-time. Built with a modern tech stack, it provides a seamless and responsive user experience.
 
