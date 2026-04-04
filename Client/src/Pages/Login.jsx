@@ -94,7 +94,7 @@ const Login = () => {
         >
           <div className="flex flex-col md:flex-row md:p-3 md:items-center">
             <h1 className="font-semibold text-lg text-white ">EnhanceAI</h1>
-            <p className="absolute right-4 text-white ">
+            <p className="hidden md:block absolute right-4 text-white ">
               <Link to="/register" className="flex gap-2 items-center">
                 Don't have an account?
                 <button className="cursor-pointer px-2 py-1 mt-1 rounded bg-[#1e1e42] flex gap-1">
@@ -218,6 +218,15 @@ const Login = () => {
                     </>
                   )}
                 </motion.button>
+                <p className="md:hidden block  text-white mt-2">
+              <Link to="/register" className="flex gap-2 items-center justify-center">
+                Don't have an account?
+                <button className="cursor-pointer px-2 py-1 mt-1 rounded bg-[#1e1e42] flex gap-1">
+                  <IoLogInOutline className="mt-1" />
+                  Sign up
+                </button>
+              </Link>
+            </p>
               </form>
 
               <br />

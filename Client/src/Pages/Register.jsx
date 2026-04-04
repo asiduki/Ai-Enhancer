@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
@@ -13,6 +13,7 @@ const Register = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const [Message, setMessage] = useState("");
+  const [Loading, setLoading] = useState(true);
 
   const loginWithGoogle = () => {
     window.location.href = `${import.meta.env.VITE_Backend_Url}/api/auth/google`;
@@ -38,11 +39,32 @@ const Register = () => {
       setMessage(err.response?.data?.message || "Something went wrong ");
     }
   };
+  useEffect(() => {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }, []);
   return (
-    <div className="bg-gradient-to-br from-[#181a34] via-[#0b0f1c] to-[#191839] min-h-screen h-full p-0 ">
+    <AnimatePresence>
+    {Loading?(
+      <motion.div
+      initial={{opacity:0}}
+      animate={{ opacity: 1 }}
+      key="loader" className="w-full h-screen flex items-center justify-center">
+        <motion.div
+        animate={{rotate:360}}
+        transition={{animation:360 , duration:1 , repeat:Infinity}}
+        className="rounded-full w-12 h-12 border-4 border-white/10 border-t-[#876cff]"/>
+      </motion.div>
+    ):(
+      <motion.div initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
+          transition={{ duration: 1, ease: "easeOut" }}key="content" className="bg-gradient-to-br from-[#181a34] via-[#0b0f1c] to-[#191839] min-h-screen h-full p-0 ">
       <div className="flex p-3 items-center pt-2">
         <h1 className="font-semibold text-lg text-white">EnhanceAI</h1>
-        <p className="absolute right-7 text-white">
+        <p className="absolute hidden md:block right-7 text-white">
           <Link
             to="/Login"
             className="flex gap-2 justify-center items-center text-lg"
@@ -98,7 +120,7 @@ const Register = () => {
             Instant at Output
           </p>
         </div>
-        <div className="bg-gradient-to-br from-[#1f2143] via-[#202844] to-[#0d0d1e] text-white rounded-xl md:w-[40%] shadow-xl  md:ml-10 p-4">
+        <div className="bg-gradient-to-br from-[#1f2143] via-[#202844] to-[#0d0d1e] text-white rounded-xl md:w-[40%] shadow-xl  md:ml-10 p-4 ">
           <h1 className="text-4xl text-bold">Create your account</h1>
           <p className="text-gray-500 text-sm mt-2 mb-4">
             Start for free and unlock your personal AI writing workspace.
@@ -171,12 +193,28 @@ const Register = () => {
             >
               Create Account
             </button>
+            <p className=" md:hidden block  text-white mt-2">
+          <Link
+            to="/Login"
+            className="flex gap-2 justify-center items-center text-lg"
+          >
+            Already have an account?{" "}
+            <button className="cursor-pointer border border-black  px-2 py-1 mt-1 rounded bg-[#1e1e42] flex gap-1">
+              <IoLogInOutline className="mt-1" />
+              Sign in
+            </button>
+          </Link>
+        </p>
           </form>
 
           <br />
         </div>
       </div>
-    </div>
+    </motion.div>
+    )}
+    </AnimatePresence>
+
+    
   );
 };
 

@@ -31,7 +31,7 @@ const Landing_page = () => {
         {},
         {
           withCredentials: true,
-        },
+        }
       );
       if (res.status == 200) {
         navigate("/Login");
@@ -40,8 +40,8 @@ const Landing_page = () => {
       alert(err.response?.data?.message || "Something went wrong ");
     }
   };
+
   const handleCopy = async () => {
-    // Guard against copying empty or placeholder text
     if (!result || Inloading) return;
 
     try {
@@ -49,15 +49,17 @@ const Landing_page = () => {
       setCopyButtonText("Copied! ✅");
       setTimeout(() => {
         setCopyButtonText("Copy");
-      }, 2000); // Reset button text after 2 seconds
+      }, 2000);
     } catch (err) {
       console.error("Failed to copy: ", err);
       setCopyButtonText("Failed");
     }
   };
+
   const prompt =
     "Correct the following text and provide only the final, corrected version as the output." +
     text;
+
   const apihandeler = async () => {
     if (!text) {
       setError(null);
@@ -104,6 +106,7 @@ const Landing_page = () => {
     getuserinfo();
     setInLoading(false);
   }, []);
+
   return (
     <AnimatePresence mode="wait">
       {Loading ? (
@@ -127,11 +130,11 @@ const Landing_page = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 1 }}
-          className="flex w-full min-h-screen h-full font-inter bg-gradient-to-br from-[#0b1020] via-[#211f4b] to-[#0b3042]"
+          className="flex flex-col md:flex-row w-full min-h-screen h-full font-inter bg-gradient-to-br from-[#0b1020] via-[#211f4b] to-[#0b3042]"
         >
-          <div className=" w-[20%] text-white border-r border-white/10">
-            <div className=" font-semibold  px-6 py-6 text-lg ">EnhanceAi</div>
-            <div className=" py-[20px]">
+          <div className="hidden md:block md:w-[20%] w-full text-white border-r border-white/10">
+            <div className="font-semibold px-6 py-6 text-lg">EnhanceAi</div>
+            <div className="py-[20px]">
               <div className="pl-8">
                 <p className="text-white/50 text-sm">WELCOME BACK</p>
                 <div className="flex gap-2">
@@ -149,52 +152,67 @@ const Landing_page = () => {
               </div>
             </div>
           </div>
-          <div className="w-[80%] min-h-screen h-full  text-white  pt-3">
-            <div className="pt-0 p-[40px] h-full w-full">
-              <div className="flex w-full">
-                <p className="text-[32px] font-[800]">Text Enhancer</p>{" "}
+
+          <div className="w-full md:w-[80%] min-h-screen h-full text-white pt-3">
+            <div className="pt-0 p-4 md:p-[40px] h-full w-full">
+              <div className="flex w-full flex-col md:flex-row">
+                <div className="md:hidden ">
+                <p className="text-white/50 text-sm">WELCOME BACK</p>
+                <div className="  flex gap-2">
+                  <div className="bg-[#1e1640] w-12 h-12 rounded-full p-1">
+                    <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#876cff] via-[#a291ff] to-[#c4b5fd]">
+                      {Userdata?.name
+                        ?.split(" ")
+                        .map((word) => word[0])
+                        .join("")
+                        .toUpperCase()}
+                    </span>
+                  </div>
+                  <h3 className="font-bold mt-1">{Userdata.name}</h3>
+                </div>
+              </div>
+                <p className="text-[28px] md:text-[32px] font-[800]">
+                  Text Enhancer
+                </p>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={LogOut}
-                  className="absolute flex gap-1 end-12 border-2 px-4 py-1 border-white/50 rounded-full cursor-pointer"
+                  className="absolute flex gap-1 right-4 md:end-12 border-2 px-4 py-1 border-white/50 rounded-full cursor-pointer mt-2 md:mt-0"
                 >
                   <IoLogOutOutline className="mt-1" />
                   Logout
                 </motion.button>
               </div>
-              <p className="text-[16px] text-white/50 mb-2">
+
+              <p className="text-[14px] md:text-[16px] text-white/50 mb-2">
                 A focused workspace with just two panels — one for your original
                 text and one for the AI-enhanced output.
               </p>
-              <div className="flex gap-5 w-full h-full justify-center items-center">
-                <div className="relative w-[45%] border-white/30 border rounded-xl p-6 min-h-[500px] h-full">
+
+              <div className="flex flex-col md:flex-row gap-5 w-full h-full justify-center items-center">
+                <div className="relative w-full md:w-[45%] border-white/30 border rounded-xl p-4 md:p-6 min-h-[400px] md:min-h-[500px] h-full">
                   <div className="font-semibold mb-2">Input</div>
                   <textarea
-                     value={text}
+                    value={text}
                     onChange={HandleChange}
-                    className="pt-0 px-[16px] h-[272px] w-full text-white/50 outline-none bg-transparent resize-none placeholder:text-white/30 "
+                    className="pt-0 px-[16px] h-[250px] md:h-[272px] w-full text-white/50 outline-none bg-transparent resize-none placeholder:text-white/30"
                     placeholder="Paste or type your raw content here. For example: “We are excited to share our product update and hope users will find it useful for their workflows...”"
-                  >
-                    
-                    {/* {error && (
-                      <p className="text-red-500 mt-2 text-center">{error}</p>
-                    )} */}
-                  </textarea>
+                  ></textarea>
 
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={apihandeler}
-                    className="absolute bottom-10 flex gap-2 bg-gradient-to-r from-[#7963ff] to-[#538dff] rounded-xl py-2 px-2 "
+                    className="absolute bottom-6 md:bottom-10 flex gap-2 bg-gradient-to-r from-[#7963ff] to-[#538dff] rounded-xl py-2 px-2"
                   >
                     Enhance Text <FaArrowRight className="mt-1" />
                   </motion.button>
                 </div>
-                <div className="w-[45%] border-white/30 border rounded-xl p-6 min-h-[500px] h-full">
-                  <div className="font-semibold mb-2 ">Output</div>
-                  <div className="pt-0 px-[16px] h-full w-full text-white/50  bg-transparent">
-                    
+
+                <div className="w-full md:w-[45%] border-white/30 border rounded-xl p-4 md:p-6 min-h-[400px] md:min-h-[500px] h-full">
+                  <div className="font-semibold mb-2">Output</div>
+                  <div className="pt-0 px-[16px] h-full w-full text-white/50 bg-transparent">
                     {ShowResultLoading ? (
                       <motion.div
                         key="loader"
@@ -215,17 +233,18 @@ const Landing_page = () => {
                       </motion.div>
                     ) : (
                       <>
-                        {Inloading?(
+                        {Inloading ? (
+                          <>{result}</>
+                        ) : (
                           <>
-                          {result}
+                            We’re excited to introduce our latest product
+                            update, thoughtfully designed to make everyday
+                            workflows faster, clearer, and more efficient. This
+                            release brings practical improvements that help
+                            users accomplish more with less friction while
+                            enjoying a smoother overall experience.
                           </>
-                      ):(<>
-                      We’re excited to introduce our latest product update,
-                    thoughtfully designed to make everyday workflows faster,
-                    clearer, and more efficient. This release brings practical
-                    improvements that help users accomplish more with less
-                    friction while enjoying a smoother overall experience.
-                      </>)}
+                        )}
                       </>
                     )}
                   </div>
