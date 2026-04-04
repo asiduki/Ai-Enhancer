@@ -92,9 +92,9 @@ const Login = () => {
           transition={{ duration: 1, ease: "easeOut" }}
           className="bg-gradient-to-br from-[#181a34] via-[#0b0f1c] to-[#191839] min-h-screen h-full p-0 "
         >
-          <div className="flex p-3 items-center">
-            <h1 className="font-semibold text-lg text-white">EnhanceAI</h1>
-            <p className="absolute right-4 text-white">
+          <div className="flex flex-col md:flex-row md:p-3 md:items-center">
+            <h1 className="font-semibold text-lg text-white ">EnhanceAI</h1>
+            <p className="absolute right-4 text-white ">
               <Link to="/register" className="flex gap-2 items-center">
                 Don't have an account?
                 <button className="cursor-pointer px-2 py-1 mt-1 rounded bg-[#1e1e42] flex gap-1">
@@ -105,7 +105,7 @@ const Login = () => {
             </p>
           </div>
           <div className="flex justify-center mt-6">
-            <div className="bg-gradient-to-br  from-[#1f2143] via-[#202844] to-[#0d0d1e] w-[35%]  shadow-lg rounded-xl  pb-10 p-2 ">
+            <div className="hidden md:block bg-gradient-to-br  from-[#1f2143] via-[#202844] to-[#0d0d1e] w-[35%]  shadow-lg rounded-xl  pb-10 p-2 ">
               <h1 className="text-4xl md:text-5xl font-semibold leading-12 max-w-3xl mb-4">
                 <span className="bg-gradient-to-r from-[#d6d6e7] to-[#7e7ec8] bg-clip-text text-transparent">
                   Sign in to your Ai
@@ -136,16 +136,16 @@ const Login = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#1f2143] via-[#202844] to-[#0d0d1e] text-white rounded-xl w-[40%] shadow-xl  ml-10 p-4">
+            <div className="bg-gradient-to-br from-[#1f2143] via-[#202844] to-[#0d0d1e] text-white rounded-xl w-[90%] md:w-[40%] shadow-xl  md:ml-10 p-4 mt-4 md:mt-0">
               <h1 className="text-4xl text-bold">Create your account</h1>
               <p className="text-gray-500 text-sm mt-2 mb-4">
                 Start for free and unlock your personal AI writing workspace.
               </p>
-              <div className="flex gap-3 w-full justify-center">
+              <div className="flex flex-col md:flex-row gap-3 w-full justify-center">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
-                  className="bg-white/5  px-4 rounded-xl text-lg py-2 flex cursor-pointer"
+                  className="bg-white/5  md:px-4 rounded-xl text-lg py-2 flex justify-center md:flex-row cursor-pointer"
                   onClick={loginWithGoogle}
                 >
                   <IoLogoGoogle className="m-1" />
@@ -154,7 +154,7 @@ const Login = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
-                  className="bg-white/5 px-4 rounded-xl text-lg py-2 flex cursor-pointer"
+                  className="bg-white/5 px-4 rounded-xl text-lg md:py-2  flex justify-center md:flex-row cursor-pointer"
                   onClick={loginWithGithub}
                 >
                   <FaGithub className="m-1" /> Continue with GitHub
