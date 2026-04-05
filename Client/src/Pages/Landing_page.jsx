@@ -153,8 +153,8 @@ const Landing_page = () => {
             </div>
           </div>
 
-          <div className="w-full md:w-[80%] min-h-screen h-full text-white pt-3">
-            <div className="pt-0 p-4 md:p-[40px] h-full w-full">
+          <div className="w-full md:w-[80%] min-h-screen h-full text-white ">
+            <div className="p-4 md:p-[40px] md:pt-2 h-full w-full">
               <div className="flex w-full flex-col md:flex-row">
                 <div className="md:hidden ">
                 <p className="text-white/50 text-sm">WELCOME BACK</p>
