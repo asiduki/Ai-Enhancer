@@ -75,8 +75,8 @@ Make sure you have the following software installed on your machine:
     ```
 
 4. **Run Backend server**
-    cd server 
-    npx nodemon
+    ```cd server 
+    npx nodemon```
 
 5.  **Run the Development Server**
     Start the React development server.
