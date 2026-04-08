@@ -51,32 +51,42 @@ Make sure you have the following software installed on your machine:
     ```
     *(Replace `your-username/your-repository-name` with your actual GitHub repository URL)*
 
-2.  **Navigate to the Project Directory**
-    ```sh
-    cd your-repository-name
-    ```
-
-3.  **Install Dependencies**
+2.  **Install Dependencies**
     Use npm (or yarn) to install all the required project dependencies.
     ```sh
     npm install
     ```
 
-4.  **Set Up Environment Variables (if any)**
+3.  **Set Up Environment Variables (if any)**
     If your project requires an API key for the AI service, create a `.env` file in the root of your project and add the necessary keys.
     ```
+    Frontend - VITE_Backend_Url:Your_backend_url_here
+    Backend - GOOGLE_GEMINI_KEY=Your-api_key
+    OPENROUTER_API_KEY=Your-api_key
+    MONGODB_URL=Your_Mongodburl_here
+    JWT_SECRET=Your_Secret_key
+    FRONTEND_URL=Your Frontend_Url
+    GOOGLE_CLIENT_ID=Your-api_key
+    GOOGLE_CLIENT_SECRET=Your-api_key
+    GITHUB_CLIENT_ID=Your_id
+    GITHUB_CLIENT_SECRET=Your_key
+    NODE_ENV=production
     REACT_APP_AI_API_KEY=your_api_key_here
     ```
-    *(Note: This is an example. The variable name must match what you use in your code to fetch data.)*
+
+4. **Run Backend server**
+    cd server 
+    npx nodemon
 
 5.  **Run the Development Server**
     Start the React development server.
     ```sh
-    npm start
+    cd client 
+    npm run dev
     ```
 
 6.  **Open in Browser**
-    The application should now be running. Open your web browser and navigate to `http://localhost:3000`.
+    The application should now be running. Open your web browser and navigate to `http://localhost:5173`.
 
 ---
 
@@ -86,4 +96,3 @@ Make sure you have the following software installed on your machine:
 2.  Click the "Enhance Text" button.
 3.  Wait for the AI to process the request (a loading spinner will appear).
 4.  The corrected text will be displayed in the right-hand panel.
-5.  Click the "Copy" button to copy the corrected text to your clipboard.
